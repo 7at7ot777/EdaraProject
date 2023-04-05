@@ -10,7 +10,8 @@ module.exports = (sequelize,Datatype)=>{
          name : {
             type :Datatype.STRING,
             len : [4,25],
-            allowNull : false
+            allowNull : false,
+            notEmpty:true
          },
          email:{
             type :Datatype.STRING,

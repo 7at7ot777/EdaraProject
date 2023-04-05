@@ -1,28 +1,31 @@
 const express = require('express');
 const db = require('./models');
+const AdminRouter = require('./routes/AdminRoutes')
+const bp = require('body-parser')
 
 //express new instance 
 const app = express();
-
-//setting ejs to render views 
-app.set('view engine','ejs'); //look directly on views folder 
-
-//to parse JSON requests
-app.use(express.urlencoded({extended:true}))
 
 //migrate db
 db.sequelize.sync({alter:true}).then(()=>{
   
 // listen to port number 
-app.listen(3000,()=>console.log('server listing'));
+app.listen(3000,()=>console.log('app is listening on port 3000'));
+
 });
 
-//middleware and static files
-app.use(express.static('public')); //to make css ,js and images which resides in public folder appear to user 
+//very very important to convert request to dictionary to read 
+app.use(express.urlencoded({extended:true}))
+//app.use(express.json());             // for application/json
+app.use(express.urlencoded());
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
 
-
-//if No Routes Found it will be redirected to a 404 page 
-app.use((req,res)=>{
-  //  res.status(404).render('404',{'title':'404'});
+app.get('/',(req,res)=>{
+  res.send('asdasdasd');
 })
+app.use(AdminRouter)
+
+
+
