@@ -7,7 +7,7 @@ const bp = require('body-parser')
 const app = express();
 
 //migrate db
-db.sequelize.sync({alter:true}).then(()=>{
+db.sequelize.sync(/*{force:true}*/).then(()=>{
   
 // listen to port number 
 app.listen(3000,()=>console.log('app is listening on port 3000'));

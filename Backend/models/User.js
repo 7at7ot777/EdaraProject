@@ -9,15 +9,21 @@ module.exports = (sequelize,Datatype)=>{
          },
          name : {
             type :Datatype.STRING,
-            len : [4,25],
             allowNull : false,
-            notEmpty:true
+            validate :{
+               notEmpty:true,
+               len : [4,25],
+
+            }
          },
          email:{
             type :Datatype.STRING,
-            isEmail : true,
             allowNull : false,
+             validate: { 
+               isEmail: {message : 'please enter valid email'},
             max : 50,
+
+             },
             },
          isAdmin:{
             type: Datatype.BOOLEAN,
@@ -30,12 +36,20 @@ module.exports = (sequelize,Datatype)=>{
          phone:{
             type:Datatype.STRING,
             allowNull:false,
-            len:[8,15],
+            validate: {len:{
+               args:[8,15],
+               msg:'phone must be 8 numbers at least and 15 number maximum'
+            },} 
+
          },
+            
          password:{
             type:Datatype.STRING,
             allowNull:false,
-            len:[8,25]
+            validate: {
+               len:{
+                  args:[8,25],
+               msg:'password length must be between 8 and 25'}}
          }
          
     });
