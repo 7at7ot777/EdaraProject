@@ -27,7 +27,15 @@ const addUser = (req,res)=>
    
 }
 
+const getAllUsers = (req,res)=>{
+     db.User.findAll({attributes:['name','email','phone','isActive']}).then((result)=>{
+         res.json(result);
+    });
+   
+}
+
 
 module.exports ={
     addUser,
+    getAllUsers,
 }
