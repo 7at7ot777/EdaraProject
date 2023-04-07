@@ -31,7 +31,7 @@ module.exports = (sequelize,Datatype)=>{
          },
          isActive:{
             type: Datatype.BOOLEAN,
-            defaultValue:false,
+            defaultValue:true,
          },
          phone:{
             type:Datatype.STRING,

@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const AdminController = require('../controllers/AdminController')
 
-router.post('/addUser',AdminController.addUser);
-router.get('/getAllUsers',AdminController.getAllUsers);
-router.get('/deleteUser/:id',AdminController.deleteUser);
-router.get('/getUser/:id',AdminController.getUser);
-router.post('/updateUser/:id',AdminController.updateUser);
+router.post('/addSupervisor',AdminController.addUser);
+router.get('/getAllSupervisors',AdminController.getAllUsers);
+router.get('/deleteSupervisor/:id',AdminController.deleteUser);
+router.get('/getSupervisor/:id',AdminController.getUser);
+router.post('/updateSupervisor/:id',AdminController.updateUser);
 
 
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./models');
 const AdminRouter = require('./routes/AdminRoutes')
+const DashBoardRouter = require('./routes/DashboardRoutes')
 const bp = require('body-parser')
 const cors=require("cors");
 
@@ -8,7 +9,7 @@ const cors=require("cors");
 const app = express();
 
 //migrate db
-db.sequelize.sync(/*{force:true}*/).then(()=>{
+db.sequelize.sync(/*{alter:true}*/).then(()=>{
   
 // listen to port number 
 app.listen(3000,()=>console.log('app is listening on port 3000'));
@@ -35,6 +36,8 @@ app.get('/',(req,res)=>{
   res.send('asdasdasd');
 })
 app.use(AdminRouter)
+app.use(DashBoardRouter)
+
 
 
 
