@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./models');
 const AdminRouter = require('./routes/AdminRoutes')
 const bp = require('body-parser')
+const cors=require("cors");
 
 //express new instance 
 const app = express();
@@ -20,6 +21,14 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.urlencoded());
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
+
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
 
 
 app.get('/',(req,res)=>{
