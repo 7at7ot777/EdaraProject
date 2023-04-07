@@ -21,7 +21,7 @@ const addUser = (req,res)=>
 }
 
 const getAllUsers = (req,res)=>{
-     db.User.findAll({attributes:['name','email','phone','isActive']}).then((result)=>{
+     db.User.findAll({attributes:['id','name','email','phone','isActive']}).then((result)=>{
          res.json(result);
     });
 }
