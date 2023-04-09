@@ -1,7 +1,9 @@
 const express = require('express');
 const db = require('./models');
-const AdminRouter = require('./routes/AdminRoutes')
-const DashBoardRouter = require('./routes/DashboardRoutes')
+const AdminRouter = require('./routes/Admin/AdminRoutes')
+const DashBoardRouter = require('./routes/Admin/DashboardRoutes')
+const AuthRouter = require('./routes/Admin/AuthRoutes')
+
 const bp = require('body-parser')
 const cors=require("cors");
 
@@ -9,10 +11,10 @@ const cors=require("cors");
 const app = express();
 
 //migrate db
-db.sequelize.sync(/*{alter:true}*/).then(()=>{
+db.sequelize.sync({force:true}).then(()=>{
   
 // listen to port number 
-app.listen(3000,()=>console.log('app is listening on port 3000'));
+app.listen(8000,()=>console.log('app is listening on port 8000'));
 
 });
 
@@ -37,6 +39,8 @@ app.get('/',(req,res)=>{
 })
 app.use(AdminRouter)
 app.use(DashBoardRouter)
+app.use(AuthRouter)
+
 
 
 

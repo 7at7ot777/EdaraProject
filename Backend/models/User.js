@@ -1,4 +1,5 @@
 
+const encryption = require('bcrypt')
 module.exports = (sequelize,Datatype)=>{
    // const seq = require('sequelize');
     const User = sequelize.define('User',{
@@ -19,9 +20,23 @@ module.exports = (sequelize,Datatype)=>{
          email:{
             type :Datatype.STRING,
             allowNull : false,
-             validate: { 
-               isEmail: {message : 'please enter valid email'},
-            max : 50,
+            unique: {
+               msg: 'This email is already taken.'
+           },
+
+            validate: { 
+               isEmail: {args: true ,msg : 'please enter valid email'},
+                 max : {args:3 ,msg:'maximum Email size is 50'},
+                 isUnique(value) {
+          
+                  return User.findOne({where:{email:value}})
+                    .then((name) => {
+                      if (name) {
+                        throw new Error('email already exist');
+                      }
+                    })
+                }
+                 ,
 
              },
             },
@@ -39,18 +54,20 @@ module.exports = (sequelize,Datatype)=>{
             validate: {len:{
                args:[8,15],
                msg:'phone must be 8 numbers at least and 15 number maximum'
-            },} 
+            },} ,
+
+           
 
          },
             
          password:{
             type:Datatype.STRING,
-            allowNull:false,
-            validate: {
-               len:{
-                  args:[8,25],
-               msg:'password length must be between 8 and 25'}}
+            allowNull:false,        
+         },
+         token:{
+            type:Datatype.STRING,
          }
+
          
     });
 

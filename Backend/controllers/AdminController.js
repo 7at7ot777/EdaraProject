@@ -1,19 +1,26 @@
 var db = require('../models')
-const addUser = (req,res)=>
-{
-   // console.log(req.body.name)
-    //var err = db.User.validate
-
+const encryption = require('bcrypt')
+const crypto = require('crypto');
+const addUser = async(req,res)=>
+{   
     //name //phone //email //password
-    var use = db.User.build({name:req.body.name , phone:req.body.phone , email:req.body.email , password:req.body.password})
+    var use = await db.User.build({name : req.body.name , 
+                                  phone : req.body.phone , 
+                                  email : req.body.email , 
+                                  password : req.body.password,
+                                  token : crypto.randomBytes(16).toString('hex')})
     return use.validate()
-    .then((data)=>{
-        use.save();
-         res.status(201).json({'message' : 'data is inserted successfully'})
-       
+    .then(async (data)=>{
+     console.log(use.password)
+        encryption.hash(use.password,10,async (error,hash)=>{
+            use.password = hash;
+            await use.save();
+            delete use.password;
+            res.status(201).json({'message' : 'data is inserted successfully','UserData':use})
 
+        });
     }).catch((err)=>{
-        console.log(err)
+       // console.log(err)
        ErrorMessageResponse(err,res);
     })
     
@@ -31,8 +38,9 @@ const deleteUser = async (req,res) =>{
    // console.log(id);
     db.User.findByPk(id).then((result)=>{
        if(result instanceof db.User){
-            result.destroy();
-            res.json({'message':'user deleted succesfully'})
+            result.isActive = false;
+            result.save();
+            res.json({'message':'Supervisor Account is now inActive'})
        }
        res.json({'message':'Not Found'})
 
@@ -89,7 +97,7 @@ const ErrorMessageResponse = (err,res)=>{
             console.log(ErrorMsgs[element].message)
            
         });
-        res.status(200).json({'errors': errorList})
+        res.status(400).json({'errors': errorList})
 }
 module.exports ={
     addUser,
