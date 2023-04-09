@@ -7,7 +7,7 @@ const DashboardDataForAdmin = async (req,res)=>{
     const Requests = await db.Request.count({where:{status : false}});
 
 
-     res.status(200).json({Warehouse,SuperVisors,Requests});
+     res.status(200).json({'Warehouse':Warehouse,'SuperVisors':SuperVisors,'Requests':Requests});
 
 }
 

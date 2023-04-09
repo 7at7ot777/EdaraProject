@@ -103,23 +103,24 @@ const updateWarehouse = async(req,res)=>{
     var id = req.params.id;
     var Body = req.body;
     
-    var warehouse = await db.Warehouse.findByPk(id,{include:User});
-    res.json(warehouse);
+    var warehouse = await db.Warehouse.findByPk(id,{
+        include: {
+          model: db.User,
+          attributes: ['name','id']
+        }})
     if(warehouse instanceof db.Warehouse){ //not null
                    // if request body is empty or null     ? keep old value  : update the value 
         
         warehouse.name =  (Body.name === null|| Body.name === '')? warehouse.name : Body.name ;
-        warehouse.email =  (Body.email === null|| Body.email === '')? warehouse.email : Body.email ;
-        warehouse.phone =  (Body.phone === null|| Body.phone === '')? warehouse.phone : Body.phone ;
         warehouse.isActive =  (Body.isActive === null|| Body.isActive === '')? warehouse.isActive : Body.isActive ;
+        warehouse.location =  (Body.phone === null|| Body.phone === '')? warehouse.phone : Body.phone ;
+        warehouse.UserId =  (Body.UserId === null|| Body.UserId === '')? warehouse.UserId : Body.UserId ;
 
-        await encryption.hash(Body.password,10,(err,hash)=>{
-            warehouse.password =  (Body.password === null|| Body.password === '')? warehouse.password : hash ;
-
-         });
-
-      await warehouse.save();
-        res.json({'message':'User updated successfully',Body})
+       
+        
+              await warehouse.save();
+                res.json({'message':'User updated successfully',Body})
+         
 
      
    }else{
