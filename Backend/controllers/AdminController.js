@@ -28,18 +28,18 @@ const addUser = async(req,res)=>
 }
 
 const getAllUsers = (req,res)=>{
-     db.User.findAll({attributes:['id','name','email','phone','isActive'],where:{isAdmin:0}}).then((result)=>{
-         res.json(result);
+     db.User.findAll({attributes:['id','name','email','phone','isActive'],where:{isAdmin:0}}).then((Supervisor)=>{
+         res.json(Supervisor);
     });
 }
 
 const setInActive = async (req,res) =>{
     id = req.params.id;
    // console.log(id);
-    db.User.findByPk(id).then((result)=>{
-       if(result instanceof db.User){
-            result.isActive = false;
-            result.save();
+    db.User.findByPk(id).then((Supervisor)=>{
+       if(Supervisor instanceof db.User){
+            Supervisor.isActive = false;
+            Supervisor.save();
             res.json({'message':'Supervisor Account is now inActive'})
        }
        res.json({'message':'Not Found'})
@@ -53,10 +53,10 @@ const setInActive = async (req,res) =>{
   const setActive = async (req,res) =>{
     id = req.params.id;
    // console.log(id);
-    db.User.findByPk(id).then(async (result)=>{
-       if(result instanceof db.User){
-            result.isActive = true;
-           await  result.save();
+    db.User.findByPk(id).then(async (Supervisor)=>{
+       if(Supervisor instanceof db.User){
+            Supervisor.isActive = true;
+           await  Supervisor.save();
             res.json({'message':'Supervisor Account is Acivatied!'})
        }
        res.json({'message':'Not Found'})
@@ -71,9 +71,9 @@ const setInActive = async (req,res) =>{
   {
     id = req.params.id;
     // console.log(id);
-     db.User.findByPk(id).then((result)=>{
-        if(result instanceof db.User){ //not null
-             res.json({'user':result})
+     db.User.findByPk(id).then((Supervisor)=>{
+        if(Supervisor instanceof db.User){ //not null
+             res.json({'user':Supervisor})
         }
         res.json({'message':'User Not Found'})
  
@@ -83,18 +83,39 @@ const setInActive = async (req,res) =>{
      });
 
   }
- const updateUser = (req,res)=>{
+ const updateUser = async (req,res)=>{
     id = req.params.id;
-    body = req.body;
+    Body = req.body;
     
-     db.User.findByPk(id).then(async (result)=>{
-        if(result instanceof db.User){ //not null
-             result.name = (body.name || (body.name ==='' ? result.name: body.name)) ??  result.name ;
-             result.email = (body.email || (body.email ==='' ? result.email: body.email)) ?? result.email;
-             result.phone = (body.phone || (body.phone ==='' ? result.phone: body.phone)) ?? result.phone ;
-             result.password = (body.password || (body.password ==='' ? result.password: body.password)) ?? result.password;
-             result.isActive = (body.isActive || (body.isActive ==='' ? result.isActive: body.isActive)) ??  result.isActive ;
-            await result.save();
+    var Supervisor = await db.User.findByPk(id);
+    if(Supervisor instanceof db.User){ //not null
+                   // if request body is empty or null     ? keep the value  : update the value 
+        Supervisor.name =  (Body.name === null|| Body.name === '')? Supervisor.name : Body.name ;
+        Supervisor.email =  (Body.email === null|| Body.email === '')? Supervisor.email : Body.email ;
+        Supervisor.phone =  (Body.phone === null|| Body.phone === '')? Supervisor.phone : Body.phone ;
+         encryption.hash(Body.password,10,(err,hash)=>{
+            Supervisor.password =  (Body.password === null|| Body.password === '')? Supervisor.password : hash ;
+
+         });
+
+      await Supervisor.save();
+        res.json({'message':'User updated successfully',Body})
+
+     
+   }else{
+    res.json({'message':'User Not Found'})
+
+   }
+
+
+     /*db.User.findByPk(id).then(async (Supervisor)=>{
+        if(Supervisor instanceof db.User){ //not null
+             Supervisor.name = (body.name || (body.name ==='' ? Supervisor.name: body.name)) ??  Supervisor.name ;
+             Supervisor.email = (body.email || (body.email ==='' ? Supervisor.email: body.email)) ?? Supervisor.email;
+             Supervisor.phone = (body.phone || (body.phone ==='' ? Supervisor.phone: body.phone)) ?? Supervisor.phone ;
+             Supervisor.password = (body.password || (body.password ==='' ? Supervisor.password: body.password)) ?? Supervisor.password;
+             Supervisor.isActive = (body.isActive || (body.isActive ==='' ? Supervisor.isActive: body.isActive)) ??  Supervisor.isActive ;
+            await Supervisor.save();
              res.json({'message':'User updated successfully'})
         }
         res.json({'message':'User Not Found'})
@@ -103,7 +124,7 @@ const setInActive = async (req,res) =>{
      }).catch((err)=>{
          console.log(err);
          ErrorMessageResponse(err,res)
-     });
+     });*/
   }
 const ErrorMessageResponse = (err,res)=>{
     console.log(err)
