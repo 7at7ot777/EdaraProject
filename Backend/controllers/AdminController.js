@@ -43,7 +43,7 @@ const setInActive = async (req,res) =>{
             Supervisor.save();
             res.json({'message':'Supervisor Account is now inActive'})
        }
-       res.json({'message':'Not Found'})
+       res.json({'error':'Not Found'})
 
       
     }).catch((err)=>{
@@ -60,7 +60,7 @@ const setInActive = async (req,res) =>{
            await  Supervisor.save();
             res.json({'message':'Supervisor Account is Acivatied!'})
        }
-       res.json({'message':'Not Found'})
+       res.json({'error':'Not Found'})
 
       
     }).catch((err)=>{
@@ -76,7 +76,7 @@ const setInActive = async (req,res) =>{
         if(Supervisor instanceof db.User){ //not null
              res.json({'user':Supervisor})
         }
-        res.json({'message':'User Not Found'})
+        res.json({'error':'User Not Found'})
  
        
      }).catch((err)=>{
@@ -106,7 +106,7 @@ const setInActive = async (req,res) =>{
 
      
    }else{
-    res.json({'message':'User Not Found'})
+    res.json({'error':'User Not Found'})
 
    }
 
@@ -123,7 +123,7 @@ const deleteSupervisor = async(req,res)=>
     }
     else{
 
-        res.json({'message':'Not Found'})
+        res.json({'error':'Not Found'})
     }
 
 }

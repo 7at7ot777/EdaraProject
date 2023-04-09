@@ -113,13 +113,15 @@ const updateWarehouse = async(req,res)=>{
         
         warehouse.name =  (Body.name === null|| Body.name === '')? warehouse.name : Body.name ;
         warehouse.isActive =  (Body.isActive === null|| Body.isActive === '')? warehouse.isActive : Body.isActive ;
-        warehouse.location =  (Body.phone === null|| Body.phone === '')? warehouse.phone : Body.phone ;
+        warehouse.location =  (Body.location === null|| Body.location === '')? warehouse.location : Body.location ;
         warehouse.UserId =  (Body.UserId === null|| Body.UserId === '')? warehouse.UserId : Body.UserId ;
 
        
         
-              await warehouse.save();
-                res.json({'message':'User updated successfully',Body})
+              await warehouse.save().then((res)=>{
+                res.json({'message':'warehouse updated successfully'})
+
+              }).catch((err)=>{res.json({'message':'warehouse updated successfully'})});
          
 
      
