@@ -111,11 +111,27 @@ const setInActive = async (req,res) =>{
 
   }
 
+const deleteSupervisor = async(req,res)=>
+{
+    const user  = await db.User.findByPk(req.params.id)
+    if(user instanceof db.User){
+     await user.destroy();
+     res.json({'message':'user deleted'})
+
+    }
+    else{
+
+        res.json({'message':'Not Found'})
+    }
+
+}
+
 module.exports ={
     addUser,
     getAllUsers,
     getUser,
     updateUser,
     setInActive,
-    setActive
+    setActive,
+    deleteSupervisor
 }

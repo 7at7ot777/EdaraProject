@@ -86,9 +86,8 @@ const getWarehouses =async (req,res)=>
 
 
 const deleteWarehouse = async(req,res)=>
-{   console.log(req.params.id)
+{   
     const warehouse  = await db.Warehouse.findByPk(req.params.id)
-    console.log(warehouse)
         if(warehouse instanceof db.Warehouse){
          await warehouse.destroy();
          res.json({'message':'Warehouse deleted'})
