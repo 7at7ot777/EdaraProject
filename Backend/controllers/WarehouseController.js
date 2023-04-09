@@ -14,9 +14,9 @@ const addWarehouse = async(req,res)=>
         
 return WH.validate()
 .then(async (data)=>{
-    const Supervisor = await db.User.findByPk(req.body.userID)
-    if(Supervisor instanceof db.User){
-        await WH.setUser(Supervisor);
+    const warehouse = await db.User.findByPk(req.body.userID)
+    if(warehouse instanceof db.User){
+        await WH.setUser(warehouse);
         await WH.save();
         res.status(200).json({'message' : 'Warehouse is added successfully'})
     }
@@ -31,10 +31,10 @@ ErrorMessage.ErrorMessageResponse(err,res);
 
 }
 
-const getSupervisorNameAndID = async(req,res)=>
+const getwarehouseNameAndID = async(req,res)=>
 {
-    Supervisors = await db.User.findAll({attributes : ['id','name']})
-    res.status(200).json({Supervisors})
+    warehouses = await db.User.findAll({attributes : ['id','name']})
+    res.status(200).json({warehouses})
 }
 
 const setInActive = (req,res)=>
@@ -99,13 +99,40 @@ const deleteWarehouse = async(req,res)=>
         }
 }
 
+const updateWarehouse = async(req,res)=>{
+    var id = req.params.id;
+    var Body = req.body;
+    
+    var warehouse = await db.Warehouse.findByPk(id);
+    if(warehouse instanceof db.Warehouse){ //not null
+                   // if request body is empty or null     ? keep old value  : update the value 
+        
+        warehouse.name =  (Body.name === null|| Body.name === '')? warehouse.name : Body.name ;
+        warehouse.email =  (Body.email === null|| Body.email === '')? warehouse.email : Body.email ;
+        warehouse.phone =  (Body.phone === null|| Body.phone === '')? warehouse.phone : Body.phone ;
+        warehouse.isActive =  (Body.isActive === null|| Body.isActive === '')? warehouse.isActive : Body.isActive ;
+
+        await encryption.hash(Body.password,10,(err,hash)=>{
+            warehouse.password =  (Body.password === null|| Body.password === '')? warehouse.password : hash ;
+
+         });
+
+      await warehouse.save();
+        res.json({'message':'User updated successfully',Body})
+
+     
+   }else{
+    res.json({'message':'User Not Found'})
+
+}}
 
 module.exports = {
     addWarehouse,
-    getSupervisorNameAndID,
+    getwarehouseNameAndID,
     setInActive,
     setActive,
     getWarehouses,
     deleteWarehouse,
+    updateWarehouse
 }
 

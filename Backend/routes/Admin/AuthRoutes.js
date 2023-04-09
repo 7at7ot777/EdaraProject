@@ -4,7 +4,7 @@ const Auth = require('../../controllers/AuthenticationController')
 
 
 
-router.get('/login',Auth.login);
+router.post('/login',Auth.login);
 
 
 
