@@ -33,7 +33,7 @@ const getAllUsers = (req,res)=>{
     });
 }
 
-const deleteUser = async (req,res) =>{
+const setInActive = async (req,res) =>{
     id = req.params.id;
    // console.log(id);
     db.User.findByPk(id).then((result)=>{
@@ -41,6 +41,23 @@ const deleteUser = async (req,res) =>{
             result.isActive = false;
             result.save();
             res.json({'message':'Supervisor Account is now inActive'})
+       }
+       res.json({'message':'Not Found'})
+
+      
+    }).catch((err)=>{
+        console.log(err);
+    });
+  }
+
+  const setActive = async (req,res) =>{
+    id = req.params.id;
+   // console.log(id);
+    db.User.findByPk(id).then(async (result)=>{
+       if(result instanceof db.User){
+            result.isActive = true;
+           await  result.save();
+            res.json({'message':'Supervisor Account is Acivatied!'})
        }
        res.json({'message':'Not Found'})
 
@@ -102,7 +119,8 @@ const ErrorMessageResponse = (err,res)=>{
 module.exports ={
     addUser,
     getAllUsers,
-    deleteUser,
     getUser,
-    updateUser
+    updateUser,
+    setInActive,
+    setActive
 }
