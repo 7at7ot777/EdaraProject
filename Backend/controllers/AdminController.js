@@ -94,6 +94,8 @@ const setInActive = async (req,res) =>{
         Supervisor.name =  (Body.name === null|| Body.name === '')? Supervisor.name : Body.name ;
         Supervisor.email =  (Body.email === null|| Body.email === '')? Supervisor.email : Body.email ;
         Supervisor.phone =  (Body.phone === null|| Body.phone === '')? Supervisor.phone : Body.phone ;
+        Supervisor.isActive =  (Body.isActive === null|| Body.isActive === '')? Supervisor.isActive : Body.isActive ;
+
         await encryption.hash(Body.password,10,(err,hash)=>{
             Supervisor.password =  (Body.password === null|| Body.password === '')? Supervisor.password : hash ;
 
