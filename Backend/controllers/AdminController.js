@@ -1,6 +1,7 @@
 var db = require('../models')
 const encryption = require('bcrypt')
 const crypto = require('crypto');
+const ErrorMessage = require('./ErrorsController')
 const addUser = async(req,res)=>
 {   
     //name //phone //email //password
@@ -21,7 +22,7 @@ const addUser = async(req,res)=>
         });
     }).catch((err)=>{
        // console.log(err)
-       ErrorMessageResponse(err,res);
+       ErrorMessage.ErrorMessageResponse(err,res);
     })
     
    
@@ -89,11 +90,11 @@ const setInActive = async (req,res) =>{
     
     var Supervisor = await db.User.findByPk(id);
     if(Supervisor instanceof db.User){ //not null
-                   // if request body is empty or null     ? keep the value  : update the value 
+                   // if request body is empty or null     ? keep old value  : update the value 
         Supervisor.name =  (Body.name === null|| Body.name === '')? Supervisor.name : Body.name ;
         Supervisor.email =  (Body.email === null|| Body.email === '')? Supervisor.email : Body.email ;
         Supervisor.phone =  (Body.phone === null|| Body.phone === '')? Supervisor.phone : Body.phone ;
-         encryption.hash(Body.password,10,(err,hash)=>{
+        await encryption.hash(Body.password,10,(err,hash)=>{
             Supervisor.password =  (Body.password === null|| Body.password === '')? Supervisor.password : hash ;
 
          });
@@ -108,35 +109,8 @@ const setInActive = async (req,res) =>{
    }
 
 
-     /*db.User.findByPk(id).then(async (Supervisor)=>{
-        if(Supervisor instanceof db.User){ //not null
-             Supervisor.name = (body.name || (body.name ==='' ? Supervisor.name: body.name)) ??  Supervisor.name ;
-             Supervisor.email = (body.email || (body.email ==='' ? Supervisor.email: body.email)) ?? Supervisor.email;
-             Supervisor.phone = (body.phone || (body.phone ==='' ? Supervisor.phone: body.phone)) ?? Supervisor.phone ;
-             Supervisor.password = (body.password || (body.password ==='' ? Supervisor.password: body.password)) ?? Supervisor.password;
-             Supervisor.isActive = (body.isActive || (body.isActive ==='' ? Supervisor.isActive: body.isActive)) ??  Supervisor.isActive ;
-            await Supervisor.save();
-             res.json({'message':'User updated successfully'})
-        }
-        res.json({'message':'User Not Found'})
- 
-       
-     }).catch((err)=>{
-         console.log(err);
-         ErrorMessageResponse(err,res)
-     });*/
   }
-const ErrorMessageResponse = (err,res)=>{
-    console.log(err)
-        ErrorMsgs = err.errors;
-        var errorList = []
-        Object.keys(ErrorMsgs).forEach(element => {
-            errorList.push(ErrorMsgs[element].message)
-            console.log(ErrorMsgs[element].message)
-           
-        });
-        res.status(400).json({'errors': errorList})
-}
+
 module.exports ={
     addUser,
     getAllUsers,

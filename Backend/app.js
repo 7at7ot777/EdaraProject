@@ -3,6 +3,8 @@ const db = require('./models');
 const AdminRouter = require('./routes/Admin/AdminRoutes')
 const DashBoardRouter = require('./routes/Admin/DashboardRoutes')
 const AuthRouter = require('./routes/Admin/AuthRoutes')
+const WarehouseRouter = require('./routes/Admin/WarehouseRoute')
+
 
 const bp = require('body-parser')
 const cors=require("cors");
@@ -40,6 +42,8 @@ app.get('/',(req,res)=>{
 app.use(AdminRouter);
 app.use(DashBoardRouter);
 app.use(AuthRouter);
+app.use(WarehouseRouter);
+
 
 
 

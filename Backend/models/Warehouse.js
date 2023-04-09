@@ -15,7 +15,7 @@ module.exports = (sequelize,Datatype)=>{
           },
           isActive:{
              type: Datatype.BOOLEAN,
-             defaultValue:false,
+             defaultValue:true,
           },
           location : {
             type :Datatype.STRING,

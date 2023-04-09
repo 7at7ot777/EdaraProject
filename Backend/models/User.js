@@ -72,7 +72,7 @@ module.exports = (sequelize,Datatype)=>{
     });
 
     User.associate = models=>{
-      User.hasOne(models.Warehouse,{
+      User.hasMany(models.Warehouse,{
          onDelete:'cascade',
          onUpdate:'cascade'
       })
