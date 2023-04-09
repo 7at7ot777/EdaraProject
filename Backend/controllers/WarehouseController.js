@@ -33,7 +33,7 @@ ErrorMessage.ErrorMessageResponse(err,res);
 
 const getwarehouseNameAndID = async(req,res)=>
 {
-    warehouses = await db.User.findAll({attributes : ['id','name']})
+    var warehouses = await db.User.findAll({attributes : ['id','name']})
     res.status(200).json({warehouses})
 }
 
@@ -103,7 +103,8 @@ const updateWarehouse = async(req,res)=>{
     var id = req.params.id;
     var Body = req.body;
     
-    var warehouse = await db.Warehouse.findByPk(id);
+    var warehouse = await db.Warehouse.findByPk(id,{include:User});
+    res.json(warehouse);
     if(warehouse instanceof db.Warehouse){ //not null
                    // if request body is empty or null     ? keep old value  : update the value 
         

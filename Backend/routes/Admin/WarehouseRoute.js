@@ -10,7 +10,7 @@ router.put('/updateWarehouse',WarehouseController.updateWarehouse);
 
 
 
-router.get('/getSupervisorNameAndID',WarehouseController.getSupervisorNameAndID);
+router.get('/getwarehouseNameAndID',WarehouseController.getwarehouseNameAndID);
 router.get('/setWarehouseInActive/:id',WarehouseController.setInActive);
 router.get('/setWarehouseActive/:id',WarehouseController.setActive);
 
