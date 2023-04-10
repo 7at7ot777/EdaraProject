@@ -11,7 +11,7 @@ const login = async(req,res)=>
     email : requestBody.email}})
    
     if (USER === null) {
-        res.status(404).json({'message':'user not found'})
+        res.status(404).json({'error':'user not found'})
       } else {
        encryption.compare(requestBody.password,USER.password,(error,result)=>{
         if(error){
@@ -28,7 +28,7 @@ const login = async(req,res)=>
         }
         else {
             // response is OutgoingMessage object that server response http request
-             res.status(400).json({message: 'passwords do not match'});
+             res.status(400).json({'error': 'passwords do not match'});
           }
        })
       

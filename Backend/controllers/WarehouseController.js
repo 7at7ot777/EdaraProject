@@ -21,7 +21,7 @@ return WH.validate()
         res.status(200).json({'message' : 'Warehouse is added successfully'})
     }
     else(
-        res.json({'message':'Error in insertion of data'})
+        res.json({'error':'Error in insertion of data'})
     )
   
 }).catch((err)=>{
@@ -48,7 +48,7 @@ const setInActive = (req,res)=>
         }
         else{
 
-            res.json({'message':'Not Found'})
+            res.json({'error':'Not Found'})
         }
  
        
@@ -67,7 +67,7 @@ const setActive = (req,res)=>{
        }
        else{
 
-           res.json({'message':'Not Found'})
+           res.json({'error':'Not Found'})
        }
 
       
@@ -95,7 +95,7 @@ const deleteWarehouse = async(req,res)=>
         }
         else{
  
-            res.json({'message':'Not Found'})
+            res.json({'error':'Not Found'})
         }
 }
 
@@ -126,7 +126,7 @@ const updateWarehouse = async(req,res)=>{
 
      
    }else{
-    res.json({'message':'User Not Found'})
+    res.json({'error':'User Not Found'})
 
 }}
 
