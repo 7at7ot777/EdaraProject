@@ -10,6 +10,7 @@ router.post('/updateSupervisor/:id',AdminController.updateUser);
 router.get('/setInActive/:id',AdminController.setInActive);
 router.get('/setActive/:id',AdminController.setActive);
 
+router.get('/getInActiveSupervisors',AdminController.getInActiveSupervisors)
 
 
 
