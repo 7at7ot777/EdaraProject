@@ -129,9 +129,11 @@ const deleteSupervisor = async(req,res)=>
 }
 
 const getInActiveSupervisors = async(req,res)=>{
-    const Supervisor = await db.User.findAll({attributes:['id','name','email','phone','isActive'],where:{isActive:0,isAdmin:0}})
-    res.json({'supervisor':Supervisor})
-}
+    db.User.findAll({attributes:['id','name','email','phone','isActive'],where:{isAdmin:0 , isActive: 0}}).then((Supervisor)=>{
+        res.json(Supervisor);})
+    }
+    
+    
 
 module.exports ={
     addUser,
