@@ -29,7 +29,7 @@ module.exports = (sequelize,Datatype)=>{
     
      Warehouse.associate = models=>{
         Warehouse.belongsTo(models.User,{
-           onDelete:'cascade',
+           //onDelete:'cascade',
            onUpdate:'cascade'
         })
         Warehouse.belongsToMany(models.Product,{ through: models.Warehouse_Product,foreignKey:'WarehousId' })

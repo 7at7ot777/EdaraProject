@@ -99,16 +99,32 @@ const setInActive = async (req,res) =>{
     if(Supervisor instanceof db.User){ //not null
                    // if request body is empty or null     ? keep old value  : update the value 
         Supervisor.name =  (Body.name === null|| Body.name === '')? Supervisor.name : Body.name ;
-        Supervisor.email =  (Body.email === null|| Body.email === '')? Supervisor.email : Body.email ;
+        if(Body.email != Supervisor.email)
+        {
+            Supervisor.email =  (Body.email === null|| Body.email === '')? Supervisor.email : Body.email ;
+        }
         Supervisor.phone =  (Body.phone === null|| Body.phone === '')? Supervisor.phone : Body.phone ;
         Supervisor.isActive =  (Body.isActive === null|| Body.isActive === '')? Supervisor.isActive : Body.isActive ;
 
-        await encryption.hash(Body.password,10,(err,hash)=>{
+       /* await encryption.hash(Body.password,10,(err,hash)=>{
             Supervisor.password =  (Body.password === null|| Body.password === '')? Supervisor.password : hash ;
 
-         });
+         });*/
+         var newPassword = (Body.password === null|| Body.password === '')? Supervisor.password : 0 ;
+         if(newPassword == 0){
+           
+            encryption.genSalt(10, (err, salt) =>
+          encryption.hash(newPassword, salt, (error, hash) => {
+           // if (error) throw error;
+            Supervisor.password = hash;
+            console.log('password changed')
+          
+          })
+        );    
+        
+        }
+            await Supervisor.save();
 
-      await Supervisor.save();
         res.json({'message':'User updated successfully',Body})
 
      
