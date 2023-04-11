@@ -20,6 +20,9 @@ app.listen(8000,()=>console.log('app is listening on port 8000'));
 
 });
 
+//allow website to access images
+app.use(express.static('upload'))
+
 //very very important to convert request to dictionary to read 
 app.use(express.urlencoded({extended:true}))
 //app.use(express.json());             // for application/json
