@@ -28,9 +28,16 @@ const addUser = async(req,res)=>
    
 }
 
+
+
 const getAllUsers = (req,res)=>{
-     db.User.findAll({attributes:['id','name','email','phone','isActive'],where:{isAdmin:0}}).then((Supervisor)=>{
-         res.json(Supervisor);
+     db.User.findAll({attributes:['id','name','email','phone','isActive'],
+                     where:{isAdmin:0} ,
+                     include:{model :db.Warehouse,attributes:['name','id']}})
+    .then((result)=>{
+        var Supervisor = result
+     
+        res.json(Supervisor);
     });
 }
 
