@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AdminController = require('../../controllers/AdminController')
+const UserValidatior = require('../../middlewares/UserMiddleware')
 
 router.post('/addSupervisor',AdminController.addUser);
 router.get('/getAllSupervisors',AdminController.getAllUsers);

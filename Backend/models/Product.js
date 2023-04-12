@@ -26,6 +26,9 @@ module.exports = (sequelize,Datatype)=>{
             type : Datatype.INTEGER ,
             allowNull:false
          },
+         image:{
+            type : Datatype.STRING,
+         }
        
         
     }
@@ -33,7 +36,11 @@ module.exports = (sequelize,Datatype)=>{
      );
 
    Product.associate = models=>{
-    Product.belongsToMany(models.Warehouse,{ through: models.Warehouse_Product , foreignKey:'ProductId' })
+    //Product.belongsToMany(models.Warehouse,{ through: models.Warehouse_Product , foreignKey:'ProductId' })
+    Product.belongsTo(models.Warehouse,{
+      //onDelete:'cascade',
+      onUpdate:'cascade'
+   })
 }
 
      return Product;

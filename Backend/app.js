@@ -4,6 +4,8 @@ const AdminRouter = require('./routes/Admin/AdminRoutes')
 const DashBoardRouter = require('./routes/Admin/DashboardRoutes')
 const AuthRouter = require('./routes/Admin/AuthRoutes')
 const WarehouseRouter = require('./routes/Admin/WarehouseRoute')
+const ProductRouter = require('./routes/Admin/ProductRoute')
+//const fileUpload = require('express-fileupload');
 
 
 const bp = require('body-parser')
@@ -30,6 +32,9 @@ app.use(express.urlencoded());
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
+//app.use(fileUpload());
+
+
 const corsOptions ={
   origin:'*', 
   credentials:true,            //access-control-allow-credentials:true
@@ -46,6 +51,8 @@ app.use(AdminRouter);
 app.use(DashBoardRouter);
 app.use(AuthRouter);
 app.use(WarehouseRouter);
+app.use(ProductRouter);
+
 
 
 

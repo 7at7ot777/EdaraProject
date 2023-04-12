@@ -32,7 +32,12 @@ module.exports = (sequelize,Datatype)=>{
            //onDelete:'cascade',
            onUpdate:'cascade'
         })
-        Warehouse.belongsToMany(models.Product,{ through: models.Warehouse_Product,foreignKey:'WarehousId' })
+        //Warehouse.belongsToMany(models.Product,{ through: models.Warehouse_Product,foreignKey:'WarehousId' })
+        Warehouse.hasMany(models.Product,{
+         //onDelete:'cascade',
+         onUpdate:'cascade'
+      })
+
       }
 
      return Warehouse;
