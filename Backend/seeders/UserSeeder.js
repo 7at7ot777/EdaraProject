@@ -16,7 +16,7 @@ module.exports = {
       },{
         name: 'Mohamed',
         isActive: 1,
-        email: 'Momomo1@gmail.com',
+        email: 'mo@gmail.com',
       password: await bcrypt.hash('123456789',salt),
         phone: '01128995765',
         token :'asddaasmsod1foafonf',

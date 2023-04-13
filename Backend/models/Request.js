@@ -7,23 +7,23 @@ module.exports = (sequelize,Datatype)=>{
              primaryKey : true,
              autoIncrement : true
           },
-          product_id : {
-            type :Datatype.INTEGER,
-            allowNull : false
-         },
           quantity : {
             type :Datatype.INTEGER,
             defaultValue:0
          },
         
-          status:{
+          isAcitve:{
              type: Datatype.BOOLEAN,
-             defaultValue:false,
+             defaultValue:false, //not proceeded
           },
           isIncrease:{
              type: Datatype.BOOLEAN,
              defaultValue:false,
           },
+          isAccepted:{
+            type: Datatype.BOOLEAN,
+            defaultValue:false,
+         },
          
         
           
@@ -31,12 +31,15 @@ module.exports = (sequelize,Datatype)=>{
  
      Request.associate = models=>{
        Request.belongsTo(models.User,{
-          onDelete:'cascade',
+        //  onDelete:'cascade',
           onUpdate:'cascade'
-       }
-        
-       )
-     }
+       })
+       Request.belongsTo(models.Product,{
+         //onDelete:'cascade',
+         onUpdate:'cascade'
+      })
+   }
+     
  
  
      return Request;

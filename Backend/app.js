@@ -5,6 +5,7 @@ const DashBoardRouter = require('./routes/Admin/DashboardRoutes')
 const AuthRouter = require('./routes/Admin/AuthRoutes')
 const WarehouseRouter = require('./routes/Admin/WarehouseRoute')
 const ProductRouter = require('./routes/Admin/ProductRoute')
+const RequestRouter = require('./routes/RequestsRoute')
 //const fileUpload = require('express-fileupload');
 
 
@@ -15,7 +16,7 @@ const cors=require("cors");
 const app = express();
 
 //migrate db
-db.sequelize.sync(/*{force:true}*/).then(()=>{
+db.sequelize.sync({force:true}).then(()=>{
   
 // listen to port number 
 app.listen(8000,()=>console.log('app is listening on port 8000'));
@@ -52,6 +53,7 @@ app.use(DashBoardRouter);
 app.use(AuthRouter);
 app.use(WarehouseRouter);
 app.use(ProductRouter);
+app.use(RequestRouter);
 
 
 

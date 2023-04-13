@@ -41,6 +41,10 @@ module.exports = (sequelize,Datatype)=>{
       //onDelete:'cascade',
       onUpdate:'cascade'
    })
+   Product.hasMany(models.Request,{
+      //onDelete:'cascade',
+      onUpdate:'cascade'
+   })
 }
 
      return Product;
