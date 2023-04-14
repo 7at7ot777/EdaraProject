@@ -16,7 +16,7 @@ const cors=require("cors");
 const app = express();
 
 //migrate db
-db.sequelize.sync({force:true}).then(()=>{
+db.sequelize.sync(/*{force:true}*/).then(()=>{
   
 // listen to port number 
 app.listen(8000,()=>console.log('app is listening on port 8000'));
