@@ -45,7 +45,10 @@ const getAllProduct = async (req,res)=>{
             });
             res.json(Products)
         }
-        res.json({'error':'There are no products in this warehouse'});
+        else{
+
+            res.json({'error':'There are no products in this warehouse'});
+        }
 }
 
 const deleteProduct=async (req,res)=>{

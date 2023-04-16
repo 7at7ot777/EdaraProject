@@ -11,7 +11,19 @@ const DashboardDataForAdmin = async (req,res)=>{
 
 }
 
+const DashboardDataForSupervisor = async (req,res)=>{
+    const Products = await db.Products.count({where:{
+        WarehouseId : req.body.WarehouseId,}}
+        )
+    const Requests = await db.Request.count({where:{
+        UserId : req.body.UserId,
+        isActive : req.body.isActive
+    }})
+    res.status(200).json({'Products':Products,'Requests':Requests})
+}
+
 module.exports ={
     DashboardDataForAdmin,
+    DashboardDataForSupervisor,
 
 }

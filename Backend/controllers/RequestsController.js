@@ -5,7 +5,7 @@ const makeRequest = async (req,res)=>{
     var body = req.body;
     var Request = db.Request.build({
         UserId : body.SupervisorID,
-        ProductId :body.ProductID,
+        RequestId :body.RequestID,
         quantity : body.quantity,
         isIncrease : body.isIncrease
 
@@ -24,17 +24,17 @@ const makeRequest = async (req,res)=>{
 const isStockIncrease = (Request)=>{ return Request.isIncrease}
 
 const processAceeptRequest = async (Request)=>{
-    var Product = await db.Product.findByPk(Request.ProductId)
+    var Request = await db.Request.findByPk(Request.RequestId)
     if(isStockIncrease(Request))
     {
-        Product.stock += Request.quantity;
+        Request.stock += Request.quantity;
         Request.isActive = 1 ; //Process is done
     }else{
-        Product.stock -= Request.quantity;
+        Request.stock -= Request.quantity;
         Request.isActive = 1 ; //Process is done
     }
     Request.isAccepted = 1; //Accepted
-    await Product.save();
+    await Request.save();
     await Request.save();
     
 
@@ -98,6 +98,19 @@ const getRequests= async (req,res)=>{
     }
 }
 
+const deleteRequest = async (req,res)=>{
+    var Request = await db.Request.findByPk(req.params.requestID);
+    if(isRequest(Request))
+    {
+       Request.destroy().then(()=>{
+        res.json({'message':'Request deleted sucessfully'})
+       })
+    }
+    else{
+        res.json({'error':'Request Not Found'})
+    }
+}
+
 
 
 
@@ -106,4 +119,5 @@ module.exports = {
     acceptRequest,
     rejectRequest,
     getRequests,
+    deleteRequest,
 }
