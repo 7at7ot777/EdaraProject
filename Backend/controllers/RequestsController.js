@@ -82,14 +82,14 @@ const getAllRequestsForAdmin = (res)=>{
         {model: db.User , attributes:['name']},
         {model: db.Product , attributes:['name','stock']},
 
-    ],attributes:['id','quantity']}).then((result)=>{
+    ],attributes:['id','quantity','isAccepted','isIncrease','isAcitve']}).then((result)=>{
              res.json(result) 
             }) 
         
     
 }
 const getRequestsForUser = (id,res)=>{
-    db.Request.findAll({where:{'UserId':id}}).then((result)=>{
+    db.Request.findAll({where:{'UserId':id},include:{model:db.Product}}).then((result)=>{
          res.json(result) 
         
     })
