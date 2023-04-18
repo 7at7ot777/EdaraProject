@@ -5,9 +5,10 @@ const makeRequest = async (req,res)=>{
     var body = req.body;
     var Request = db.Request.build({
         UserId : body.SupervisorID,
-        RequestId :body.RequestID,
+        ProductId :body.ProductID,
         quantity : body.quantity,
-        isIncrease : body.isIncrease
+        isIncrease : body.isIncrease,
+      
 
     })
 

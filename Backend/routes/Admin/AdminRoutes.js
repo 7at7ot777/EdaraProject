@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const AdminController = require('../../controllers/AdminController')
-const UserValidatior = require('../../middlewares/UserMiddleware')
+const UserValidatior = require('../../middlewares/AddUserFormValidatorMiddleware')
 
-router.post('/addSupervisor',AdminController.addUser);
+router.post('/addSupervisor',UserValidatior.UserFormValidation,UserValidatior.ValidateInputs,AdminController.addUser);
 router.get('/getAllSupervisors',AdminController.getAllUsers);
 router.get('/getSupervisor/:id',AdminController.getUser);
 router.delete('/deleteSupervisor/:id',AdminController.deleteSupervisor)
