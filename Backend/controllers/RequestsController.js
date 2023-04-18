@@ -78,7 +78,11 @@ const rejectRequest = async (req,res)=>{
 }
 
 const getAllRequestsForAdmin = (res)=>{
-    db.Request.findAll().then((result)=>{
+    db.Request.findAll({include:[
+        {model: db.User , attributes:['name']},
+        {model: db.Product , attributes:['name','stock']},
+
+    ],attributes:['id','quantity']}).then((result)=>{
              res.json(result) 
             }) 
         
