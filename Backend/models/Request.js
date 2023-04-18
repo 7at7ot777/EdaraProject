@@ -14,11 +14,11 @@ module.exports = (sequelize,Datatype)=>{
         
           isAcitve:{
              type: Datatype.BOOLEAN,
-             defaultValue:false, //not proceeded
+             defaultValue:true, //not proceeded
           },
           isIncrease:{
              type: Datatype.BOOLEAN,
-             defaultValue:false,
+             defaultValue:true, //need stock
           },
           isAccepted:{
             type: Datatype.BOOLEAN,

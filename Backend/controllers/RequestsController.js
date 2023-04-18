@@ -25,18 +25,22 @@ const makeRequest = async (req,res)=>{
 const isStockIncrease = (Request)=>{ return Request.isIncrease}
 
 const processAceeptRequest = async (Request)=>{
-    var Request = await db.Request.findByPk(Request.RequestId)
+    var Product = await db.Product.findByPk(Request.ProductId)
     if(isStockIncrease(Request))
     {
-        Request.stock += Request.quantity;
-        Request.isActive = 1 ; //Process is done
+        Product.stock += Request.quantity;
+    Request.isActive = false ; //Process is done //not active anymore
+
     }else{
-        Request.stock -= Request.quantity;
-        Request.isActive = 1 ; //Process is done
+        Product.stock -= Request.quantity;
+    Request.isActive = false ; //Process is done //not active anymore
+
     }
+    Request.isActive = false ; //Process is done //not active anymore
+
     Request.isAccepted = 1; //Accepted
     await Request.save();
-    await Request.save();
+    await Product.save();
     
 
 }
@@ -45,7 +49,12 @@ const acceptRequest = async(req,res)=>{
     var Request = await db.Request.findByPk(requestID);
     if(isRequest(Request))
     {
-        processAceeptRequest(Request)
+        processAceeptRequest(Request);
+         Request.isAcitve = 0 ; //Process is done //not active anymore
+         Request.isAcitve = false ; //Process is done //not active anymore
+
+         Request.isAccepted = 1; //Accepted
+         await Request.save();
         res.json({'message':'Request is Proceeded Successfully'})
     }
     else{
@@ -58,7 +67,7 @@ const rejectRequest = async (req,res)=>{
     var Request = await db.Request.findByPk(requestID);
     if(isRequest(Request))
     {
-       Request.isActive = 1;
+       Request.isActive = 0;
        Request.isAccepted = 0;
        await Request.save();
         res.json({'message':'Request is Proceeded Successfully'})
