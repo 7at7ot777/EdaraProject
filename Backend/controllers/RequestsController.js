@@ -67,7 +67,7 @@ const rejectRequest = async (req,res)=>{
     var Request = await db.Request.findByPk(requestID);
     if(isRequest(Request))
     {
-       Request.isActive = 0;
+       Request.isAcitve = false;
        Request.isAccepted = 0;
        await Request.save();
         res.json({'message':'Request is Proceeded Successfully'})

@@ -12,12 +12,12 @@ const DashboardDataForAdmin = async (req,res)=>{
 }
 
 const DashboardDataForSupervisor = async (req,res)=>{
-    const Products = await db.Products.count({where:{
+    const Products = await db.Product.count({where:{
         WarehouseId : req.body.WarehouseId,}}
         )
     const Requests = await db.Request.count({where:{
         UserId : req.body.UserId,
-        isActive : req.body.isActive
+        isAcitve :true
     }})
     res.status(200).json({'Products':Products,'Requests':Requests})
 }
