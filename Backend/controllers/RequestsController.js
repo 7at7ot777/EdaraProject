@@ -125,6 +125,34 @@ const deleteRequest = async (req,res)=>{
     }
 }
 
+const updateRequest = async (req,res)=>{
+    var Request = await db.Request.findByPk(req.params.requestID);
+    //res.json({'rqst':req.params.requestID,Request})
+    if(isRequest(Request))
+    {
+        var body = req.body;
+      if(body.quantity)
+      {
+     Request.quantity = body.quantity
+        
+      }
+      if(body.isIncrease)
+      {
+        Request.isIncrease = body.isIncrease
+
+      }
+
+      await Request.save();
+        res.json({'message':'Request updated sucessfully'})
+
+      
+
+    }
+    else{
+        res.json({'error':'Request Not Found'})
+    }
+}
+
 
 
 
@@ -134,4 +162,5 @@ module.exports = {
     rejectRequest,
     getRequests,
     deleteRequest,
+    updateRequest
 }

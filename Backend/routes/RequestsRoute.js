@@ -9,6 +9,7 @@ router.get('/acceptRequest',Request.acceptRequest)
 router.get('/rejectRequest',Request.rejectRequest)
 router.get('/getRequests',Request.getRequests);
 router.delete('/deleteRequest/:requestID',Request.deleteRequest)
+router.put('/updateRequest/:requestID',Request.updateRequest)
 
 
 
