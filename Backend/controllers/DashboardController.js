@@ -12,15 +12,16 @@ const DashboardDataForAdmin = async (req,res)=>{
 }
 
 const DashboardDataForSupervisor = async (req,res)=>{ 
+    const UID =  req.headers.userid;
     const WarehouseIdentfication = await db.Warehouse.
-        findOne({where:{UserId : req.headers.userid},attributes:['id']})
+        findOne({where:{UserId :UID},attributes:['id']})
       
     const Products = await db.Product.count({where:{
-        WarehouseId : WarehouseIdentfication}}
+        WarehouseId : WarehouseIdentfication.id}}
         )
        
     const Requests = await db.Request.count({where:{
-        UserId : req.headers.userid,
+        UserId :UID,
         isAcitve :true
     }})
     res.status(200).json({'Products':Products,'Requests':Requests,WarehouseIdentfication})
