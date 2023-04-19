@@ -13,7 +13,7 @@ const login = async(req,res)=>
     if (USER === null) {
         res.status(404).json({'error':'user not found'})
       } else {
-       encryption.compare(requestBody.password,USER.password,(error,result)=>{
+       encryption.compare(requestBody.password,USER.password,async (error,result)=>{
         if(error){
             console.log(error);
         }
@@ -22,9 +22,17 @@ const login = async(req,res)=>
              delete USER.dataValues.password;
              delete USER.dataValues.createdAt;
              delete USER.dataValues.updatedAt;
+                if(USER.isAdmin==false){
+                    const WarehouseIdentfication = await db.Warehouse.findOne({where:{UserId : USER.id},attributes:['id']})
+                    res.status(200).json({'user':USER,'WarehouseID':WarehouseIdentfication})}
+
+                
+                else{
+                    res.status(200).json({'user':USER})}
+
+                }
 
 
-                res.status(200).json({'user':USER})}
         }
         else {
             // response is OutgoingMessage object that server response http request
