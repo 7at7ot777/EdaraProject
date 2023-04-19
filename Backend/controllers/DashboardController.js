@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const DashboardDataForAdmin = async (req,res)=>{
     const Warehouse = await db.Warehouse.count({where:{isActive:true}})
     const SuperVisors = await db.User.count({where:{isAdmin:false}})
-    const Requests = await db.Request.count({where:{isAccepted : false}});
+    const Requests = await db.Request.count({where:{isActive : true}});
 
 
      res.status(200).json({'warehouse':Warehouse,'supervisors':SuperVisors,'requests':Requests});
@@ -12,7 +12,8 @@ const DashboardDataForAdmin = async (req,res)=>{
 }
 
 const DashboardDataForSupervisor = async (req,res)=>{ 
-    const WarehouseIdentfication = await db.Warehouse.findOne({where:{UserId : req.headers.userid},attributes:['id']})
+    const WarehouseIdentfication = await db.Warehouse.
+        findOne({where:{UserId : req.headers.userid},attributes:['id']})
       
     const Products = await db.Product.count({where:{
         WarehouseId : WarehouseIdentfication}}
@@ -22,7 +23,7 @@ const DashboardDataForSupervisor = async (req,res)=>{
         UserId : req.headers.userid,
         isAcitve :true
     }})
-    res.status(200).json({'Products':Products,'Requests':Requests})
+    res.status(200).json({'Products':Products,'Requests':Requests,WarehouseIdentfication})
 }
 
 module.exports ={
