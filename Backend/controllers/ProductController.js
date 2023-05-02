@@ -39,9 +39,12 @@ const getAllProduct = async (req,res)=>{
        var  Products = await db.Product.findAll({where:{WarehouseId : req.params.WarehouseId}})
         if(isProduct(Products[0]))
         {
+            // Products.forEach(element => {
+            //     var absolutePath = resolve('./upload/'+element.image);
+            //      element.image = absolutePath;
             Products.forEach(element => {
-                var absolutePath = resolve('./upload/'+element.image);
-                 element.image = absolutePath;
+                var absolutePath = "http://localhost:8000/" + element.image; 
+                element.image = absolutePath
             });
             res.json(Products)
         }
