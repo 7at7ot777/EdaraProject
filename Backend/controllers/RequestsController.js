@@ -80,17 +80,34 @@ const rejectRequest = async (req,res)=>{
 const getAllRequestsForAdmin = (res)=>{
     db.Request.findAll({include:[
         {model: db.User , attributes:['name']},
-        {model: db.Product , attributes:['name','stock']},
+        {model: db.Product , attributes:['name','stock','image']},
 
     ],attributes:['id','quantity','isAccepted','isIncrease','isAcitve']}).then((result)=>{
-             res.json(result) 
+        
+        var requests = result
+
+        requests.forEach(async element => {
+          var absolutePath = "http://localhost:8000/" + element.Product.image; 
+            element.Product.image = absolutePath;
+           
+        });
+        
+        res.json(requests) 
             }) 
         
     
 }
 const getRequestsForUser = (id,res)=>{
     db.Request.findAll({where:{'UserId':id},include:{model:db.Product}}).then((result)=>{
-         res.json(result) 
+        var requests = result
+
+        requests.forEach(async element => {
+          var absolutePath = "http://localhost:8000/" + element.Product.image; 
+            element.Product.image = absolutePath;
+           
+        });
+        
+        res.json(requests) 
         
     })
 }
