@@ -87,7 +87,7 @@ const getAllRequestsForAdmin = (res)=>{
         var requests = result
 
         requests.forEach(async element => {
-          var absolutePath = "http://localhost:8000/" + element.Product.image; 
+          var absolutePath = "http://localhost:8000/" + element.Product?.image; 
             element.Product.image = absolutePath;
            
         });
